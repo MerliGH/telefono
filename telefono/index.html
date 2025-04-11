@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador de Teléfonos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Cotizador de teléfonos</h1>
+            <p><i>¡Selecciona tu modelo favorito y<b> <u>cotiza ahora</u></b>!</i></p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="phone-gallery">
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+                <button class="filter-btn" data-filter="gama-media">Gama Media</button>
+                <button class="filter-btn" data-filter="economico">Económicos</button>
+            </div>
+
+            <div class="phones-container">
+                <!-- Los teléfonos se cargarán dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <section class="phone-details hidden">
+            <button class="back-btn"><i class="fas fa-arrow-left"></i> Volver</button>
+            <div class="detail-content">
+                <div class="detail-image">
+                    <img id="detail-img" src="" alt="Teléfono">
+                </div>
+                <div class="detail-info">
+                    <h2 id="detail-name"></h2>
+                    <div class="rating" id="detail-rating"></div>
+                    <p class="price" id="detail-price"></p>
+
+                    <div class="specs">
+                        <h3>Especificaciones</h3>
+                        <ul id="detail-specs"></ul>
+                    </div>
+
+                    <div class="quote-section">
+                        <h3>Cotizar</h3>
+                        <div class="quote-options">
+                            <label for="storage">Almacenamiento:</label>
+                            <select id="storage">
+                                <option value="64">64GB</option>
+                            </select>
+
+                            <label for="color">Color:</label>
+                            <select id="color">
+                                <option value="negro">Negro</option>
+                                <option value="blanco">Blanco</option>
+                                <option value="azul">Azul</option>
+                                <option value="rojo">Rojo</option>
+                            </select>
+
+
+                        </div>
+
+                        <!-- Método de pago dentro de quote-options -->
+                        <div class="payment-method-group">
+                            <label for="payment-method">Método de pago:</label>
+                            <select id="payment-method">
+                                <option value="contado">Al contado (Descuento 5%)</option>
+                                <option value="credito">A crédito</option>
+                            </select>
+                        </div>
+
+                        <!-- Opciones de crédito -->
+                        <div id="credit-options" class="hidden">
+
+
+                            <div class="low-enganche-warning hidden">
+                                ⚠️ ¡Un enganche bajo puede generar cuotas altas! ⚠️ 
+                            </div>
+
+
+                            <h3 class="credit-options-title">
+                                <i class="fas fa-file-invoice-dollar"></i> 
+                                Opciones de crédito
+                            </h3>
+
+
+                            <div class="credit-breakdown">
+                                <label for="enganche">Enganche (%):</label>
+                            <input type="range" id="enganche" min="10" max="50" value="20" step="5">
+                            <span id="enganche-value">20%</span>
+                                <h4>Desglose del crédito</h4>
+                                <table>
+                                    <tr>
+                                        <td>Enganche:</td>
+                                        <td id="desglose-enganche">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total intereses:</td>
+                                        <td id="desglose-intereses">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total a pagar:</td>
+                                        <td id="desglose-total">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mensualidades:</td>
+                                        <td id="desglose-mensualidades">$0.00 x 0 meses</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <label for="plazo">Plazo (meses):</label>
+                            <select id="plazo">
+                                <option value="3">3 meses</option>
+                                <option value="6">6 meses</option>
+                                <option value="12">12 meses</option>
+                            </select>
+
+                            
+                        </div>
+                        <div class="amortization-table hidden"> <!-- Agrega la clase hidden -->
+                            <h4><i class="fas fa-table"></i> Tabla de amortización</h4>
+
+                            
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>Pago</th>
+                                        <th>Interés</th>
+                                        <th>Capital</th>
+                                        <th>Saldo Pendiente</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="amortization-body">
+                                    <!-- JavaScript llenará esto -->
+                                </tbody>
+                            </table>
+                        </div>
+<br></br>
+                        <div class="final-price">
+                            <p>Precio final: <span id="final-price">$0</span></p>
+                            <button class="btn quote-btn">Calcular</button>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Ingeniería en Desarrollo y Gestión de Software - 7A - Matemáticas para ingeniería</p>
+        </div>
+    </footer>
+
+    <div class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>¡Cotización solicitada!</h2>
+            <p>Hemos recibido tu solicitud de cotización para el <span id="modal-phone-name"></span>.</p>
+            <p>Precio final: <strong id="modal-final-price"></strong></p><br>
+            <p>Un asesor se pondrá en contacto contigo en breve.</p><br>
+            <button class="btn modal-close-btn">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
